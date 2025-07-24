@@ -11,18 +11,21 @@ class TestOracleVariableDeclarations:
         """Set up Oracle and Databricks dialects."""
         return get_dialect("oracle"), get_dialect("databricks")
 
-    @pytest.mark.parametrize("oracle_code,expected", [
-        ("p_date_start NUMBER;", "DECLARE VARIABLE p_date_start BIGINT"),
-        ("v_name VARCHAR2;", "DECLARE VARIABLE v_name STRING"),
-        ("v_date DATE;", "DECLARE VARIABLE v_date DATE"),
-        ("v_timestamp TIMESTAMP;", "DECLARE VARIABLE v_timestamp TIMESTAMP"),
-        ("v_char CHAR;", "DECLARE VARIABLE v_char STRING"),
-        ("some_var VARCHAR;", "DECLARE VARIABLE some_var STRING"),
-        ("counter INTEGER;", "DECLARE VARIABLE counter BIGINT"),
-        ("amount DECIMAL;", "DECLARE VARIABLE amount DECIMAL"),
-        ("ratio FLOAT;", "DECLARE VARIABLE ratio DOUBLE"),
-        ("description CLOB;", "DECLARE VARIABLE description STRING"),
-    ])
+    @pytest.mark.parametrize(
+        "oracle_code,expected",
+        [
+            ("p_date_start NUMBER;", "DECLARE VARIABLE p_date_start BIGINT"),
+            ("v_name VARCHAR2;", "DECLARE VARIABLE v_name STRING"),
+            ("v_date DATE;", "DECLARE VARIABLE v_date DATE"),
+            ("v_timestamp TIMESTAMP;", "DECLARE VARIABLE v_timestamp TIMESTAMP"),
+            ("v_char CHAR;", "DECLARE VARIABLE v_char STRING"),
+            ("some_var VARCHAR;", "DECLARE VARIABLE some_var STRING"),
+            ("counter INTEGER;", "DECLARE VARIABLE counter BIGINT"),
+            ("amount DECIMAL;", "DECLARE VARIABLE amount DECIMAL"),
+            ("ratio FLOAT;", "DECLARE VARIABLE ratio DOUBLE"),
+            ("description CLOB;", "DECLARE VARIABLE description STRING"),
+        ],
+    )
     def test_oracle_variable_declarations(self, dialects, oracle_code, expected):
         """Test that Oracle variable declarations are converted to DECLARE VARIABLE statements."""
         oracle_dialect, databricks_dialect = dialects
@@ -47,7 +50,7 @@ class TestOracleVariableDeclarations:
             "p_count NUMBER;",
             "SELECT COUNT(*) FROM users;",
         ]
-        
+
         for stmt in statements:
             result = transpile(stmt, read=oracle_dialect, write=databricks_dialect)
             assert len(result) == 1

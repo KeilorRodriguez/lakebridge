@@ -400,7 +400,7 @@ def to_array(self, expression: exp.ToArray) -> str:
 def _oracle_variable_declaration_sql(self, expression: exp.Alias) -> str:
     """
     Convert Oracle variable declarations to Databricks DECLARE VARIABLE syntax.
-    
+
     Oracle: p_date_start NUMBER;
     Databricks: DECLARE VARIABLE p_date_start BIGINT;
     """
@@ -409,7 +409,7 @@ def _oracle_variable_declaration_sql(self, expression: exp.Alias) -> str:
     # - `alias` is a datatype identifier (NUMBER, VARCHAR2, etc.)
     if isinstance(expression.this, exp.Column):
         variable_name = expression.this.name
-        
+
         # Get the alias type - could be string or Identifier
         alias_type = None
         if isinstance(expression.alias, str):
@@ -418,20 +418,39 @@ def _oracle_variable_declaration_sql(self, expression: exp.Alias) -> str:
             alias_type = expression.alias.this.upper()
         elif hasattr(expression.alias, 'this'):
             alias_type = str(expression.alias.this).upper()
-        
+
         # Check if it's a known Oracle datatype
         oracle_datatypes = [
-            'NUMBER', 'INTEGER', 'INT', 'SMALLINT', 'DECIMAL', 'NUMERIC', 'FLOAT', 'DOUBLE',
-            'VARCHAR2', 'VARCHAR', 'CHAR', 'NCHAR', 'NVARCHAR2', 'CLOB', 'NCLOB',
-            'DATE', 'TIMESTAMP', 'TIMESTAMPTZ', 'TIMESTAMPLTZ',
-            'RAW', 'LONG', 'BLOB', 'BFILE'
+            'NUMBER',
+            'INTEGER',
+            'INT',
+            'SMALLINT',
+            'DECIMAL',
+            'NUMERIC',
+            'FLOAT',
+            'DOUBLE',
+            'VARCHAR2',
+            'VARCHAR',
+            'CHAR',
+            'NCHAR',
+            'NVARCHAR2',
+            'CLOB',
+            'NCLOB',
+            'DATE',
+            'TIMESTAMP',
+            'TIMESTAMPTZ',
+            'TIMESTAMPLTZ',
+            'RAW',
+            'LONG',
+            'BLOB',
+            'BFILE',
         ]
         if alias_type and alias_type in oracle_datatypes:
             # Map Oracle types to Databricks types
             type_mapping = {
                 # Numeric types
                 'NUMBER': 'BIGINT',
-                'INTEGER': 'BIGINT', 
+                'INTEGER': 'BIGINT',
                 'INT': 'BIGINT',
                 'SMALLINT': 'SMALLINT',
                 'DECIMAL': 'DECIMAL',
@@ -439,7 +458,7 @@ def _oracle_variable_declaration_sql(self, expression: exp.Alias) -> str:
                 'FLOAT': 'DOUBLE',
                 'DOUBLE': 'DOUBLE',
                 # String types
-                'VARCHAR2': 'STRING', 
+                'VARCHAR2': 'STRING',
                 'VARCHAR': 'STRING',
                 'CHAR': 'STRING',
                 'NCHAR': 'STRING',
@@ -455,12 +474,12 @@ def _oracle_variable_declaration_sql(self, expression: exp.Alias) -> str:
                 'RAW': 'BINARY',
                 'LONG': 'STRING',
                 'BLOB': 'BINARY',
-                'BFILE': 'STRING'
+                'BFILE': 'STRING',
             }
-            
+
             databricks_type = type_mapping.get(alias_type, 'STRING')
             return f"DECLARE VARIABLE {variable_name} {databricks_type}"
-    
+
     # If not a variable declaration, fall back to default alias handling
     return self.alias_sql(expression)
 
