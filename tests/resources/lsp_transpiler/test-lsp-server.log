@@ -1,0 +1,45 @@
+INFO:pygls.feature_manager:Registered builtin feature exit
+INFO:pygls.feature_manager:Registered builtin feature initialize
+INFO:pygls.feature_manager:Registered builtin feature initialized
+INFO:pygls.feature_manager:Registered builtin feature notebookDocument/didChange
+INFO:pygls.feature_manager:Registered builtin feature notebookDocument/didClose
+INFO:pygls.feature_manager:Registered builtin feature notebookDocument/didOpen
+INFO:pygls.feature_manager:Registered builtin feature $/setTrace
+INFO:pygls.feature_manager:Registered builtin feature shutdown
+INFO:pygls.feature_manager:Registered builtin feature textDocument/didChange
+INFO:pygls.feature_manager:Registered builtin feature textDocument/didClose
+INFO:pygls.feature_manager:Registered builtin feature textDocument/didOpen
+INFO:pygls.feature_manager:Registered builtin feature window/workDoneProgress/cancel
+INFO:pygls.feature_manager:Registered builtin feature workspace/didChangeWorkspaceFolders
+INFO:pygls.feature_manager:Registered builtin feature workspace/executeCommand
+INFO:pygls.feature_manager:Registered "initialize" with options "None"
+INFO:pygls.feature_manager:Registered "textDocument/didOpen" with options "None"
+INFO:pygls.feature_manager:Registered "textDocument/didClose" with options "None"
+INFO:pygls.feature_manager:Registered "document/transpileToDatabricks" with options "None"
+DEBUG:__main__:SOME_ENV=abc
+DEBUG:__main__:sys.args=['lsp_server.py', '--stuff=12', '--log_level=INFO']
+INFO:pygls.server:Starting async IO server
+DEBUG:asyncio:Using selector: EpollSelector
+DEBUG:pygls.server:Content length: 458
+DEBUG:pygls.protocol.json_rpc:Request 'initialize' received
+INFO:pygls.protocol.language_server:Language server initialized InitializeParams(capabilities=ClientCapabilities(workspace=None, text_document=None, notebook_document=None, window=None, general=None, experimental=None), process_id=316513, client_info=ClientInfo(name='lakebridge', version='0.10.5'), locale=None, root_path=None, root_uri='file:///home/keilordev/databricks/lakebridge/tests/resources/lsp_transpiler', initialization_options={'remorph': {'source-dialect': 'source_dialect'}, 'options': None, 'custom': {'whatever': 'xyz'}}, trace=None, work_done_token=None, workspace_folders=None)
+DEBUG:__main__:client-info=lakebridge/0.10.5
+DEBUG:__main__:client-process-id=316513
+DEBUG:__main__:dialect=source_dialect
+DEBUG:__main__:whatever=xyz
+DEBUG:__main__:experimental=None
+DEBUG:pygls.protocol.json_rpc:Sending request with id "de96677b-8cb2-4c53-956e-055d5457f238": client/registerCapability RegistrationParams(registrations=[Registration(id='5a3836cb-378f-4bb2-bf24-90b288226daf', method='document/transpileToDatabricks', register_options=None)])
+INFO:pygls.protocol.json_rpc:Sending data: {"id": "de96677b-8cb2-4c53-956e-055d5457f238", "params": {"registrations": [{"id": "5a3836cb-378f-4bb2-bf24-90b288226daf", "method": "document/transpileToDatabricks"}]}, "method": "client/registerCapability", "jsonrpc": "2.0"}
+DEBUG:pygls.server:Content length: 80
+DEBUG:pygls.protocol.json_rpc:Response message received.
+DEBUG:pygls.protocol.json_rpc:Received result for message "de96677b-8cb2-4c53-956e-055d5457f238": None
+DEBUG:__main__:fetch-document-uri=file:///home/keilordev/databricks/lakebridge/tests/resources/lsp_transpiler/workspace_file.yml: test: test
+
+DEBUG:pygls.protocol.language_server:Server capabilities: {"positionEncoding": "utf-16", "textDocumentSync": {"openClose": true, "change": 2, "save": false}, "executeCommandProvider": {"commands": []}, "workspace": {"workspaceFolders": {"supported": true, "changeNotifications": true}, "fileOperations": {}}}
+INFO:pygls.protocol.json_rpc:Sending data: {"id": "df2b3775-2ded-408c-96c8-64f317e08d92", "jsonrpc": "2.0", "result": {"capabilities": {"positionEncoding": "utf-16", "textDocumentSync": {"openClose": true, "change": 2, "save": false}, "executeCommandProvider": {"commands": []}, "workspace": {"workspaceFolders": {"supported": true, "changeNotifications": true}, "fileOperations": {}}}, "serverInfo": {"name": "test-lsp-server", "version": "v0.1"}}}
+DEBUG:pygls.server:Content length: 86
+DEBUG:pygls.protocol.json_rpc:Request 'shutdown' received
+INFO:pygls.protocol.json_rpc:Sending data: {"id": "c5b7a98a-1c13-492c-84b8-3648c00d083a", "jsonrpc": "2.0", "result": null}
+DEBUG:pygls.server:Content length: 36
+DEBUG:pygls.protocol.json_rpc:Notification 'exit' received
+INFO:pygls.server:Shutting down the server
